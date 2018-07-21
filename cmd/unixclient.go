@@ -16,14 +16,14 @@ package cmd
 
 import (
 	"fmt"
+
 	"github.com/spf13/cobra"
-	"mytcp/cmd/pkg/utils"
-	"mytcp/cmd/tcpserver2"
+	"mytcp/cmd/unix"
 )
 
-// tcpserverCmd represents the tcpserver command
-var tcpserverCmd = &cobra.Command{
-	Use:   "tcpserver",
+// unixclientCmd represents the unixclient command
+var unixclientCmd = &cobra.Command{
+	Use:   "unixclient",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -33,27 +33,26 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// TODO: Work your own magic here
-		fmt.Println("tcpserver called")
-		serverInfo , err:= utils.NewServer("127.0.0.1","tcp",2000)
-		if err!=nil{
+		fmt.Println("unixclient called")
+		us := unix.New(unix.DefaultSockFileName, unix.DefaultBuffSize)
+		err := us.ClientCreate()
+		if err != nil{
 			panic(err)
 		}
-		tcpserver2.TcpServerCreate(serverInfo)
-		//TODO: set signals @chenchao
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(tcpserverCmd)
+	RootCmd.AddCommand(unixclientCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// tcpserverCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// unixclientCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// tcpserverCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// unixclientCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
 }

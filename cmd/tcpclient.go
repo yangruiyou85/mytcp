@@ -15,8 +15,6 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 	"mytcp/cmd/tcpclient"
 	"mytcp/cmd/pkg/utils"
@@ -33,19 +31,17 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("tcpclient called")
-
-		serverInfo, err := utils.NewServer("192.168.80.11", "tcp", 20000)
-		if err != nil {
+		// TODO: Work your own magic here
+		serverInfo , err:= utils.NewServer("127.0.0.1","tcp",2000)
+		if err!=nil{
 			panic(err)
-
 		}
 		tcpclient.ConnectServer(serverInfo)
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(tcpclientCmd)
+	RootCmd.AddCommand(tcpclientCmd)
 
 	// Here you will define your flags and configuration settings.
 
@@ -56,4 +52,5 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// tcpclientCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
 }
